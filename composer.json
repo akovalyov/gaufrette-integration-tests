@@ -1,0 +1,10 @@
+{
+    "require-dev": {
+        "behat/behat": "^3.0"
+    },
+    "require": {
+        "knplabs/gaufrette": "^0.2.0",
+        "aws/aws-sdk-php": "^3.13",
+        "herzult/php-ssh": "^1.1"
+    }
+}
