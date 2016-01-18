@@ -17,22 +17,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
     private $currentFileContent;
 
     /**
-     * @BeforeSuite
-     */
-    public static function setup()
-    {
-        DockerFactory::start();
-    }
-
-    /**
-     * @AfterSuite
-     */
-    public static function teardown()
-    {
-        DockerFactory::stop();
-    }
-
-    /**
      * @BeforeScenario
      * @AfterScenario
      */
