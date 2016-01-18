@@ -24,8 +24,8 @@ class FeatureContext implements Context, SnippetAcceptingContext
      * @var string|null
      */
     private $methodOutput;
+
     /**
-     * @BeforeScenario
      * @AfterScenario
      */
     public function cleanup()
@@ -59,10 +59,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function fileExistsWithContent($name, PyStringNode $string = null)
     {
-        if(null === $string){
+        if (null === $string) {
             $this->filesystem->createFile($name);
-        }
-        else {
+        } else {
             $this->filesystem->write($name, $string->__toString(), true);
         }
     }
@@ -73,6 +72,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iReadFile($name)
     {
         $this->currentFileContent = $this->filesystem->read($name);
+    }
+
+    /**
+     * @When I rename :source to :dest
+     */
+    public function iRename($source, $dest)
+    {
+        $this->filesystem->rename($source, $dest);
     }
 
     /**
@@ -103,4 +110,11 @@ class FeatureContext implements Context, SnippetAcceptingContext
         return in_array($fileKey, $this->methodOutput[$key]);
     }
 
+    /**
+     * @Then I should not see :fileKey in :key
+     */
+    public function iShouldNotSeeIn($fileKey, $key)
+    {
+        return !($this->iShouldSee($fileKey, $key));
+    }
 }
