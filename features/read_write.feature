@@ -4,19 +4,19 @@ Feature:
 
   Scenario Outline: Read/Write files
     Given I use <tech>
-    And I write "test.txt" with content:
+      And I write "test.txt" with content:
       """
       Hello world
       """
-    When I read file "test.txt"
-    Then I should see:
+     When I read file "test.txt"
+     Then I should see:
       """
       Hello world
       """
 
     Examples:
-      | tech |
+      | tech  |
       | local |
-      | sftp |
-      | s3 |
+      | sftp  |
+      | s3    |
 
