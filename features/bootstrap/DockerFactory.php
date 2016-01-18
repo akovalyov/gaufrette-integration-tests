@@ -2,8 +2,13 @@
 
 class DockerFactory
 {
-    public static function start($service)
+    public static function start()
     {
-        exec(sprintf('docker-compose up -d %s ', $service));
+        exec(sprintf('docker-compose up -d'));
+    }
+
+    public static function stop()
+    {
+        exec(sprintf('docker-compose up -d'));
     }
 }

@@ -3,37 +3,53 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
-use Gaufrette\Adapter;
 
 class FeatureContext implements Context, SnippetAcceptingContext
 {
     /**
-     * @var Adapter
+     * @var \Gaufrette\Filesystem
      */
-    private $adapter;
+    private $filesystem;
 
     /**
      * @var string|null
      */
     private $currentFileContent;
+
     /**
-    * @BeforeScenario
-    * @AfterScenario
-    */
+     * @BeforeSuite
+     */
+    public function setup()
+    {
+        DockerFactory::start();
+    }
+
+    /**
+     * @AfterSuite
+     */
+    public function teardown()
+    {
+        DockerFactory::stop();
+    }
+    /**
+     * @BeforeScenario
+     * @AfterScenario
+     */
     public function cleanup()
     {
         $filesystems = array(AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local'));
-        foreach($filesystems as $filesystem) {
+        foreach ($filesystems as $filesystem) {
             foreach ($filesystem->keys() as $file) {
                 if ($file === '.gitkeep') {
                     continue;
                 }
-                if($filesystem->has($file)) {
+                if ($filesystem->has($file)) {
                     $filesystem->delete($file);
                 }
             }
         }
     }
+
     /**
      * @Given I use :tech
      */
@@ -42,15 +58,16 @@ class FeatureContext implements Context, SnippetAcceptingContext
         if ($tech !== 'local') {
             DockerFactory::start($tech);
         }
-        $this->adapter = AdapterProxyFactory::create($tech);
+
+        $this->filesystem = AdapterProxyFactory::create($tech);
     }
 
     /**
-     * @Given file :name exists with content:
+     * @Given I write :name with content:
      */
     public function fileExistsWithContent($name, PyStringNode $string)
     {
-        $this->adapter->write($name, $string->__toString(), true);
+        $this->filesystem->write($name, $string->__toString(), true);
     }
 
     /**
@@ -58,7 +75,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iReadFile($name)
     {
-        $this->currentFileContent = $this->adapter->read($name);
+        $this->currentFileContent = $this->filesystem->read($name);
     }
 
     /**
@@ -66,9 +83,10 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldSee(PyStringNode $string)
     {
-        if(null === $this->currentFileContent){
+        if (null === $this->currentFileContent) {
             throw new \RuntimeException('No file was read yet');
         }
+
         return strstr($this->currentFileContent, $string->__toString());
     }
 }
