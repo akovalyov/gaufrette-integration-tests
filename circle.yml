@@ -5,6 +5,6 @@ machine:
     version: 5.5.11
 test:
   pre:
-    - composer install --ingnore-platform-reqs
+    - pecl install ssh2-beta
   override:
     - php vendor/bin/behat
