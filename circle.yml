@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - composer install --prefer-dist --ignore-platform-reqs
+    - composer install --prefer-source --ignore-platform-reqs
 
 test:
   override:
