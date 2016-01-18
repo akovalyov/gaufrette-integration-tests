@@ -5,9 +5,11 @@ environment:
 install:
   - choco install -y filezilla.server
   - choco install -y php
-  - choco install -y composer
   - choco install -y git
+  - cd C:\bin
+  - php -r "readfile('https://getcomposer.org/installer');" | php
+  - echo @php "%~dp0composer.phar" %*>composer.bat
   - composer install
 
 build_script:
-  - php vendor/bin/behat.bat
+  - php vendor/bin/behat
