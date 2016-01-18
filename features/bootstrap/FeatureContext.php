@@ -22,14 +22,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
     */
     public function cleanup()
     {
-        $adapters = [AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local')];
-        foreach($adapters as $adapter) {
-            foreach ($adapter->keys() as $file) {
+        $filesystems = array(AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local'));
+        foreach($filesystems as $filesystem) {
+            foreach ($filesystem->keys() as $file) {
                 if ($file === '.gitkeep') {
                     continue;
                 }
-                if($adapter->exists($file)) {
-                    $adapter->delete($file);
+                if($filesystem->has($file)) {
+                    $filesystem->delete($file);
                 }
             }
         }
