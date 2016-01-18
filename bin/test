@@ -1,3 +1,7 @@
 #!/bin/bash
+
+export GAUFRETTE_FTP_USER="gaufrette"
+export GAUFRETTE_FTP_PASSWORD="gaufrette"
+export GAUFRETTE_FTP_PORT="21"
 docker-compose up -d
 php vendor/bin/behat

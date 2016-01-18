@@ -6,6 +6,10 @@ use Behat\Gherkin\Node\PyStringNode;
 
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    public function __construct(array $parameters){
+
+        $this->factory = new AdapterProxyFactory($parameters);
+    }
     /**
      * @var \Gaufrette\Filesystem
      */
@@ -26,7 +30,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function cleanup()
     {
-        $filesystems = array(AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local'));
+        $filesystems = array($this->factory->create('s3'), $this->factory->create('local'));
         foreach ($filesystems as $filesystem) {
             foreach ($filesystem->keys() as $file) {
                 if ($file === '.gitkeep') {
@@ -44,7 +48,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iUse($storage, $adapter)
     {
-         $this->filesystem = AdapterProxyFactory::create($adapter);
+         $this->filesystem = $this->factory->create($adapter);
     }
 
     /**
