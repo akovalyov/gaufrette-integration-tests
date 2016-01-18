@@ -3,7 +3,7 @@ Feature:
   I should be able to use the read/write methods
 
   Scenario Outline: Read/Write files
-    Given I use <tech>
+    Given I use <storage> with adapter <adapter>
       And I write "test.txt" with content:
       """
       Hello world
@@ -15,8 +15,9 @@ Feature:
       """
 
     Examples:
-      | tech  |
-      | local |
-      | sftp  |
-      | s3    |
+      | storage  | adapter        |
+      | local    | local          |
+      | sftp     | sftp_phpseclib |
+      | s3       | s3             |
+      | ftp      | ftp            |
 

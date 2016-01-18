@@ -31,6 +31,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         DockerFactory::stop();
     }
+
     /**
      * @BeforeScenario
      * @AfterScenario
@@ -51,15 +52,11 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given I use :tech
+     * @Given I use :storage with adapter :adapter
      */
-    public function iUse($tech)
+    public function iUse($storage, $adapter)
     {
-        if ($tech !== 'local') {
-            DockerFactory::start($tech);
-        }
-
-        $this->filesystem = AdapterProxyFactory::create($tech);
+         $this->filesystem = AdapterProxyFactory::create($adapter);
     }
 
     /**

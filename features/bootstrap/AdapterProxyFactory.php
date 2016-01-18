@@ -17,7 +17,7 @@ class AdapterProxyFactory
             case 'local':
                 $adapter = new LocalAdapter('./tmp');
                 break;
-            case 'sftp':
+            case 'sftp_phpseclib':
                 $sftp = new \phpseclib\Net\SFTP('localhost', 2222);
                 $sftp->login('gaufrette', 'gaufrette');
 
@@ -26,6 +26,13 @@ class AdapterProxyFactory
             case 's3':
                 $service = new \Aws\S3\S3Client(array('key' => 'your_key_here', 'secret' => 'your_secret', 'endpoint' => 'http://localhost:4569','bucket_endpoint' => true, 'region' => 'us-west-2', 'version' => '2006-03-01' ));
                 $adapter  = new \Gaufrette\Adapter\AwsS3($service,'your-bucket-name');
+                break;
+            case 'ftp':
+                $adapter = new \Gaufrette\Adapter\Ftp('/', 'localhost', array(
+                    'username' => 'gaufrette',
+                    'password' => 'gaufrette',
+                    'passive' => true,
+                ));
                 break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));

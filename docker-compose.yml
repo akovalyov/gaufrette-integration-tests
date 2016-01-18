@@ -4,8 +4,21 @@ sftp:
         - ./tmp:/home/gaufrette/share
     command: gaufrette:gaufrette:1001
     ports:
-        - "2222:22"       
+        - "2222:22"
+
 s3:
     image: lphoward/fake-s3
     ports:
        - "4569:4569"
+
+ftp:
+    image: helder/vsftpd
+    ports:
+      - "20-21:20-21"
+      - "12020-12025:12020-12025"
+    volumes:
+      - "./tmp/:/var/ftp/gaufrette"
+    environment:
+      - FTP_VIRT_USER=gaufrette
+      - FTP_VIRT_PASS=gaufrette
+
