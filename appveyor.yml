@@ -33,7 +33,7 @@ install:
     - IF %PHP%==1 cd ..
     - cd c:\projects\gaufrette-integration-tests
     - appveyor DownloadFile https://getcomposer.org/composer.phar
-    - php composer.phar install --prefer-dist --no-interaction --no-progress --ansi
+    - php composer.phar install --prefer-dist --no-interaction --no-progress --ansi --ignore-platform-reqs
     - choco install -y filezilla.server
 
 build_script:
