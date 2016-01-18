@@ -19,7 +19,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     /**
      * @BeforeSuite
      */
-    public function setup()
+    public static function setup()
     {
         DockerFactory::start();
     }
@@ -27,7 +27,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     /**
      * @AfterSuite
      */
-    public function teardown()
+    public static function teardown()
     {
         DockerFactory::stop();
     }

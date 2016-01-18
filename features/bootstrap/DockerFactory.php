@@ -9,6 +9,6 @@ class DockerFactory
 
     public static function stop()
     {
-        exec(sprintf('docker-compose up -d'));
+        exec(sprintf('docker-compose stop'));
     }
 }
