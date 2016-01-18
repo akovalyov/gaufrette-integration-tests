@@ -1,10 +1,36 @@
 {
-    "require-dev": {
-        "behat/behat": "^3.0"
-    },
-    "require": {
-        "knplabs/gaufrette": "^0.2.0",
-        "aws/aws-sdk-php": "^3.13",
-        "herzult/php-ssh": "^1.1"
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "phpseclib/compatibility-layer",
+        "version": "1.0.0",
+        "dist": {
+          "url": "https://github.com/phpseclib/libssh2-compatibility-layer/archive/master.zip",
+          "type": "zip"
+        },
+        "source": {
+          "url": "git@github.com:phpseclib/libssh2-compatibility-layer.git",
+          "type": "git",
+          "reference": "dev-master"
+        }
+      }
     }
+  ],
+  "require-dev": {
+    "behat/behat": "^3.0"
+  },
+  "require": {
+    "knplabs/gaufrette": "^0.2.0",
+    "aws/aws-sdk-php": "^3.13",
+    "herzult/php-ssh": "^1.1",
+    "phpseclib/phpseclib": "^2.0",
+    "phpseclib/compatibility-layer": "*"
+  },
+  "autoload": {
+    "files": ["vendor/phpseclib/compatibility-layer/phpseclib.php"],
+    "psr-4": {
+      "Aws\\": "src/Aws"
+    }
+  }
 }

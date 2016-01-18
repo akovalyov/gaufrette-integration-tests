@@ -13,17 +13,25 @@ class FeatureContext implements Context, SnippetAcceptingContext
     private $adapter;
 
     /**
+     * @var string|null
+     */
+    private $currentFileContent;
+    /**
     * @BeforeScenario
     * @AfterScenario
     */
     public function cleanup()
     {
-        $adapter = ProxyFactory::create('local');
-        foreach ($adapter->keys() as $file) {
-            if ($file === '.gitkeep') {
-                continue;
+        $adapters = [AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local')];
+        foreach($adapters as $adapter) {
+            foreach ($adapter->keys() as $file) {
+                if ($file === '.gitkeep') {
+                    continue;
+                }
+                if($adapter->exists($file)) {
+                    $adapter->delete($file);
+                }
             }
-            $adapter->delete($file);
         }
     }
     /**
@@ -34,7 +42,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         if ($tech !== 'local') {
             DockerFactory::start($tech);
         }
-        $this->adapter = ProxyFactory::create($tech);
+        $this->adapter = AdapterProxyFactory::create($tech);
     }
 
     /**
@@ -42,7 +50,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function fileExistsWithContent($name, PyStringNode $string)
     {
-        $this->adapter->write($name, $string->__toString());
+        $this->adapter->write($name, $string->__toString(), true);
     }
 
     /**
@@ -50,7 +58,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iReadFile($name)
     {
-        $this->currentFile = $this->adapter->read($name);
+        $this->currentFileContent = $this->adapter->read($name);
     }
 
     /**
@@ -58,6 +66,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldSee(PyStringNode $string)
     {
-        return strstr($this->currentFile, $string->__toString());
+        if(null === $this->currentFileContent){
+            throw new \RuntimeException('No file was read yet');
+        }
+        return strstr($this->currentFileContent, $string->__toString());
     }
 }

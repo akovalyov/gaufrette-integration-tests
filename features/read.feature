@@ -16,5 +16,6 @@ Feature:
 
     Examples:
       | tech |
-#      | local |
-      | sftp |
+      | local |
+#      | sftp |
+      | s3 |
