@@ -18,12 +18,10 @@ class AdapterProxyFactory
                 $adapter = new LocalAdapter('./tmp');
                 break;
             case 'sftp':
-                $configuration = new Ssh\Configuration('localhost', '2222');
-                $authentication = new Ssh\Authentication\Password('gaufrette', 'gaufrette');
+                $sftp = new \phpseclib\Net\SFTP('localhost', 2222);
+                $sftp->login('gaufrette', 'gaufrette');
 
-                $session = new Ssh\Session($configuration, $authentication);
-                $client = new SftpClient($session);
-                $adapter = new Sftp($client, '/home/gaufrette/share/./', true);
+                $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, 'share', true);
                 break;
             case 's3':
                 $service = new \Aws\S3\S3Client(array('key' => 'your_key_here', 'secret' => 'your_secret', 'endpoint' => 'http://localhost:4569','bucket_endpoint' => true, 'region' => 'us-west-2', 'version' => '2006-03-01' ));

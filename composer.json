@@ -28,7 +28,6 @@
     "phpseclib/compatibility-layer": "*"
   },
   "autoload": {
-    "files": ["vendor/phpseclib/compatibility-layer/phpseclib.php"],
     "psr-4": {
       "Aws\\": "src/Aws"
     }
