@@ -5,8 +5,8 @@ machine:
     version: 5.5.11
 
 dependencies:
-  pre:
-    - pecl install ssh2-beta
+  override:
+    - composer install --prefer-dist --ignore-platform-reqs
 
 test:
   override:
