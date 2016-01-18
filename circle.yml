@@ -1,0 +1,9 @@
+machine:
+  services:
+    - docker
+
+test:
+  pre:
+    - composer install
+  override:
+    - php vendor/bin/behat
