@@ -5,6 +5,6 @@ machine:
     version: 5.5.11
 test:
   pre:
-    - composer install
+    - composer install --ingnore-platform-reqs
   override:
     - php vendor/bin/behat
