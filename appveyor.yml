@@ -37,4 +37,4 @@ install:
     - choco install -y filezilla.server
 
 build_script:
-  - php vendor/bin/behat --tags="@windows"
+  - php vendor/bin/behat -s appveyor
