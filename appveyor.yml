@@ -33,8 +33,8 @@ install:
     - IF %PHP%==1 cd ..
     - cd c:\projects\gaufrette-integration-tests
     - appveyor DownloadFile https://getcomposer.org/composer.phar
-    - copy /Y etc\appveyor\parameters.test.yml app\config\parameters.yml
     - php composer.phar install --prefer-dist --no-interaction --no-progress --ansi
+    - choco install -y filezilla.server
 
 build_script:
-  - php vendor/bin/behat
+  - php vendor/bin/behat --tags="@windows"
