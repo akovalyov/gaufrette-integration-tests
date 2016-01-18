@@ -17,6 +17,10 @@ class FeatureContext implements Context, SnippetAcceptingContext
     private $currentFileContent;
 
     /**
+     * @var string|null
+     */
+    private $methodOutput;
+    /**
      * @BeforeScenario
      * @AfterScenario
      */
@@ -44,11 +48,19 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given file :name exists
+     * @Given dir :name exists
+     * @Given file :name exists with content:
      * @Given I write :name with content:
      */
-    public function fileExistsWithContent($name, PyStringNode $string)
+    public function fileExistsWithContent($name, PyStringNode $string = null)
     {
-        $this->filesystem->write($name, $string->__toString(), true);
+        if(null === $string){
+            $this->filesystem->createFile($name);
+        }
+        else {
+            $this->filesystem->write($name, $string->__toString(), true);
+        }
     }
 
     /**
@@ -70,4 +82,21 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
         return strstr($this->currentFileContent, $string->__toString());
     }
+
+    /**
+     * @When I call method :method of current fs adapter
+     */
+    public function iCallMethodOfCurrentAdapter($method)
+    {
+        $method = new \ReflectionMethod($this->filesystem->getAdapter(), $method);
+        $this->methodOutput = $method->invoke($this->filesystem->getAdapter());
+    }
+    /**
+     * @Then I should see :fileKey in :key
+     */
+    public function iShouldSeeIn($fileKey, $key)
+    {
+        return in_array($fileKey, $this->methodOutput[$key]);
+    }
+
 }

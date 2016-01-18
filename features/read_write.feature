@@ -20,4 +20,5 @@ Feature:
       | sftp     | sftp_phpseclib |
       | s3       | s3             |
       | ftp      | ftp            |
+      | webdav   | webdav         |
 

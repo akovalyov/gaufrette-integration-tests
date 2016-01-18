@@ -21,4 +21,3 @@ ftp:
     environment:
       - FTP_VIRT_USER=gaufrette
       - FTP_VIRT_PASS=gaufrette
-
