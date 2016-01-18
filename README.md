@@ -10,8 +10,9 @@ A small set of Gaufrette tests interacting as close to reality as possible.
 
 ### Installtion
 
-`git clone git@github.com:akovalyov/gaufrette-integration-tests.git`
-`composer install`
-`./bin/test`
+```bash
+git clone git@github.com:akovalyov/gaufrette-integration-tests.git
+composer install
+./bin/test
 
 
