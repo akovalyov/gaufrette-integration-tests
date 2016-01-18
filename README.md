@@ -8,7 +8,7 @@ A small set of Gaufrette tests interacting as close to reality as possible.
 * `docker-compose`
 * `composer`
 
-### Installtion
+### Installation
 
 ```bash
 git clone git@github.com:akovalyov/gaufrette-integration-tests.git
