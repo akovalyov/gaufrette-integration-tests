@@ -3,8 +3,11 @@ machine:
     - docker
   php:
     version: 5.5.11
-test:
+
+dependencies:
   pre:
     - pecl install ssh2-beta
+
+test:
   override:
     - php vendor/bin/behat
