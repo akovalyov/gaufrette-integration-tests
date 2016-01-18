@@ -1,7 +1,10 @@
 version: 1.10.0.{build}
 environment:
-  TIMEOUT: "60m"
+    TIMEOUT: "60m"
 clone_folder: c:\projects\gaufrette-integration-tests
+cache:
+    - c:\php -> appveyor.yml
+    - '%LOCALAPPDATA%\Composer\files -> appveyor.yml'
 init:
     - SET PATH=c:\php;%PATH%
     - SET COMPOSER_NO_INTERACTION=1
@@ -36,5 +39,5 @@ install:
     - php composer.phar install --prefer-dist --no-interaction --no-progress --ansi --ignore-platform-reqs
     - choco install -y filezilla.server
 
-build_script:
+test_script:
   - php vendor/bin/behat -s appveyor
