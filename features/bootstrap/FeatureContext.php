@@ -6,6 +6,10 @@ use Behat\Gherkin\Node\PyStringNode;
 
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    public function __construct(array $parameters){
+
+        $this->factory = new AdapterProxyFactory($parameters);
+    }
     /**
      * @var \Gaufrette\Filesystem
      */
@@ -20,21 +24,25 @@ class FeatureContext implements Context, SnippetAcceptingContext
      * @var string|null
      */
     private $methodOutput;
+
     /**
-     * @BeforeScenario
      * @AfterScenario
      */
     public function cleanup()
     {
-        $filesystems = array(AdapterProxyFactory::create('s3'), AdapterProxyFactory::create('local'));
+        $filesystems = array($this->factory->create('s3'), $this->factory->create('local'));
         foreach ($filesystems as $filesystem) {
-            foreach ($filesystem->keys() as $file) {
-                if ($file === '.gitkeep') {
-                    continue;
+            try {
+                foreach ($filesystem->keys() as $file) {
+                    if ($file === '.gitkeep') {
+                        continue;
+                    }
+                    if ($filesystem->has($file)) {
+                        $filesystem->delete($file);
+                    }
                 }
-                if ($filesystem->has($file)) {
-                    $filesystem->delete($file);
-                }
+            }catch(\Exception $e){
+
             }
         }
     }
@@ -44,7 +52,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iUse($storage, $adapter)
     {
-         $this->filesystem = AdapterProxyFactory::create($adapter);
+         $this->filesystem = $this->factory->create($adapter);
     }
 
     /**
@@ -55,10 +63,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function fileExistsWithContent($name, PyStringNode $string = null)
     {
-        if(null === $string){
+        if (null === $string) {
             $this->filesystem->createFile($name);
-        }
-        else {
+        } else {
             $this->filesystem->write($name, $string->__toString(), true);
         }
     }
@@ -69,6 +76,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iReadFile($name)
     {
         $this->currentFileContent = $this->filesystem->read($name);
+    }
+
+    /**
+     * @When I rename :source to :dest
+     */
+    public function iRename($source, $dest)
+    {
+        $this->filesystem->rename($source, $dest);
     }
 
     /**
@@ -96,7 +111,22 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldSeeIn($fileKey, $key)
     {
-        return in_array($fileKey, $this->methodOutput[$key]);
+        return in_array($fileKey, $this->filesystem->listKeys());
     }
 
+    /**
+     * @Then I should not see :fileKey in :key
+     */
+    public function iShouldNotSeeIn($fileKey, $key)
+    {
+        return !($this->iShouldSeeIn($fileKey, $key));
+    }
+
+    /**
+     * @When I delete file :key
+     */
+    public function iDeleteFile($key)
+    {
+        $this->filesystem->delete($key);
+    }
 }

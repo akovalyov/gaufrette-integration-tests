@@ -1,0 +1,33 @@
+default:
+    autoload:
+        '': %paths.base%/features/bootstrap
+    suites:
+        default:
+            contexts:
+                - FeatureContext:
+                    parameters:
+                        ftp:
+                            host: localhost
+                            username: gaufrette
+                            password: gaufrette
+                            port: 21
+                            passive: true
+                        s3:
+                            key: your_key_here
+                            secret: your_secret
+                            endpoint: http://localhost:4569
+                            region: us-west-2
+                            version: '2006-03-01'
+                            bucket: 'bucket'
+        appveyor:
+            contexts:
+                - FeatureContext:
+                    parameters:
+                        ftp:
+                            host: localhost
+                            username: filezilla
+                            password: filezilla
+                            port: 14147
+                            passive: true
+            filters:
+                tags: @windows

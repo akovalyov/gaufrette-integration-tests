@@ -21,3 +21,8 @@ ftp:
     environment:
       - FTP_VIRT_USER=gaufrette
       - FTP_VIRT_PASS=gaufrette
+
+mongo:
+    image: mongo
+    ports:
+      - 27016:27017

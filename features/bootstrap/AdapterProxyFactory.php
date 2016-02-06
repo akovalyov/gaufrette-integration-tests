@@ -7,37 +7,71 @@ use Ssh\Sftp as SftpClient;
 
 class AdapterProxyFactory
 {
+    public function __construct(array $options)
+    {
+        $this->options = $options;
+    }
+
     /**
      * @param $name
      * @return Filesystem
      */
-    public static function create($name)
+    public function create($name)
     {
         switch ($name) {
             case 'local':
                 $adapter = new LocalAdapter('./tmp');
                 break;
             case 'sftp_phpseclib':
-                $sftp = new \phpseclib\Net\SFTP('localhost', 2222);
-                $sftp->login('gaufrette', 'gaufrette');
+                $sftp = new \phpseclib\Net\SFTP($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
+                $sftp->login($this->getParameter('sftp', 'login'), 'password');
 
                 $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, 'share', true);
                 break;
+            case 'sftp':
+                $configuration  = new Ssh\Configuration($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
+                $authentication = new Ssh\Authentication\Password($this->getParameter('sftp', 'login'), $this->getParameter('sftp', 'password')); // for other options, check php-ssh docs
+
+                $session   = new Ssh\Session($configuration, $authentication);
+                $adapter   = new Gaufrette\Adapter\Sftp($session->getSftp());
+
+                break;
             case 's3':
-                $service = new \Aws\S3\S3Client(array('key' => 'your_key_here', 'secret' => 'your_secret', 'endpoint' => 'http://localhost:4569','bucket_endpoint' => true, 'region' => 'us-west-2', 'version' => '2006-03-01' ));
-                $adapter  = new \Gaufrette\Adapter\AwsS3($service,'your-bucket-name');
+                $service = new \Aws\S3\S3Client(array(
+                    'credentials' => ['key' => $this->getParameter('s3', 'key'),
+                    'secret' => $this->getParameter('s3', 'secret'),
+                    ],
+                    'endpoint' => $this->getParameter('s3', 'endpoint'),
+                    'bucket_endpoint' => $this->getParameter('s3', 'bucket_endpoint'),
+                    'region' => $this->getParameter('s3', 'region'),
+                    'version' => $this->getParameter('s3', 'version'),
+                ));
+                $adapter = new \Gaufrette\Adapter\AwsS3($service, $this->getParameter('s3', 'bucket'));
                 break;
             case 'ftp':
-                $adapter = new \Gaufrette\Adapter\Ftp('/', 'localhost', array(
-                    'username' => 'gaufrette',
-                    'password' => 'gaufrette',
-                    'passive' => true,
+                $adapter = new \Gaufrette\Adapter\Ftp('/', $this->getParameter('ftp', 'host'), array(
+                    'username' => $this->getParameter('ftp', 'username'),
+                    'password' => $this->getParameter('ftp', 'password'),
+                    'passive' => $this->getParameter('ftp', 'passive'),
+                    'port' => $this->getParameter('ftp', 'port'),
                 ));
+                break;
+
+            case 'gridfs':
+                $client = new MongoClient(sprintf('mongodb://%s:%s', $this->getParameter('gridfs', 'host'), $this->getParameter('gridfs', 'port')));
+                $db = $client->selectDB($this->getParameter('gridfs', 'db'));
+
+                $adapter = new \Gaufrette\Adapter\GridFS(new MongoGridFS($db));
                 break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));
         }
 
         return new Filesystem($adapter);
+    }
+
+    private function getParameter($key, $value)
+    {
+        return $this->options[$key][$value];
     }
 }
