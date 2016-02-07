@@ -6,8 +6,8 @@ use Behat\Gherkin\Node\PyStringNode;
 
 class FeatureContext implements Context, SnippetAcceptingContext
 {
-    public function __construct(array $parameters){
-
+    public function __construct(array $parameters)
+    {
         $this->factory = new AdapterProxyFactory($parameters);
     }
     /**
@@ -41,10 +41,17 @@ class FeatureContext implements Context, SnippetAcceptingContext
                         $filesystem->delete($file);
                     }
                 }
-            }catch(\Exception $e){
-
+            } catch (\Exception $e) {
             }
         }
+    }
+
+    /**
+     * @AfterScenario
+     */
+    public function resetHead()
+    {
+        exec('cd vendor/knplabs/gaufrette && git reset HEAD --hard');
     }
 
     /**
@@ -52,7 +59,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iUse($storage, $adapter)
     {
-         $this->filesystem = $this->factory->create($adapter);
+        $this->filesystem = $this->factory->create($adapter);
     }
 
     /**
@@ -108,17 +115,28 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Then I should see :fileKey
      * @Then I should see :fileKey in :key
      */
-    public function iShouldSeeIn($fileKey, $key)
+    public function iShouldSeeIn($fileKey, $key = '')
     {
-        return in_array($fileKey, $this->filesystem->listKeys());
+        $outputArray = [];
+        $list = new RecursiveIteratorIterator(new RecursiveArrayIterator($this->filesystem->listKeys($key)));
+        foreach ($list as $sub) {
+            $subArray = $list->getSubIterator();
+            if ($subArray === $fileKey) {
+                $outputArray[] = iterator_to_array($subArray);
+            }
+        }
+
+        return count($outputArray) > 0;
     }
 
     /**
+     * @Then I should not see :fileKey
      * @Then I should not see :fileKey in :key
      */
-    public function iShouldNotSeeIn($fileKey, $key)
+    public function iShouldNotSeeIn($fileKey, $key = '')
     {
         return !($this->iShouldSeeIn($fileKey, $key));
     }
@@ -129,5 +147,18 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iDeleteFile($key)
     {
         $this->filesystem->delete($key);
+    }
+
+    /**
+     * @Given I use pr :id
+     */
+    public function iUsePr($id)
+    {
+        exec(sprintf('cd vendor/knplabs/gaufrette && git stash && git pull origin master && curl -sS https://patch-diff.githubusercontent.com/raw/KnpLabs/Gaufrette/pull/%s.patch | git apply', $id));
+        if(!extension_loaded('runkit')){
+            throw new \RuntimeException('You should install `runkit` extension to be able to use hot-swap feature');
+        }
+        
+        runkit_import('vendor/autoload.php', RUNKIT_IMPORT_OVERRIDE);
     }
 }

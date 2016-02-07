@@ -7,8 +7,8 @@ I should be able to get list of keys with dirs with baclslash
     And file "test" exists
     And file "\test" exists
     When I call method "listDirectory" of current fs adapter
-    Then I should see "\test" in keys
-    Then I should see "test" in keys
+    Then I should see "\test"
+    Then I should see "test"
 
   Scenario: I get raw listing of directories with backslash
     Given I use ftp with adapter ftp
@@ -17,6 +17,6 @@ I should be able to get list of keys with dirs with baclslash
     And dir "\" exists
     And dir "\\" exists
     When I call method "listDirectory" of current fs adapter
-    Then I should see "\test" in dirs
-    Then I should see "\" in dirs
-    Then I should see "\\" in dirs
+    Then I should see "\test"
+    Then I should see "\"
+    Then I should see "\\"

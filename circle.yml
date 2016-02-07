@@ -6,9 +6,10 @@ machine:
 
 dependencies:
   override:
+    - pecl install mongo
     - composer install --prefer-source --ignore-platform-reqs
     - docker-compose up -d
 
 test:
   override:
-    - php vendor/bin/behat
+    - php vendor/bin/behat -s default

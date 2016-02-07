@@ -3,7 +3,6 @@
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\Sftp;
 use Gaufrette\Adapter\Local as LocalAdapter;
-use Ssh\Sftp as SftpClient;
 
 class AdapterProxyFactory
 {
@@ -14,6 +13,7 @@ class AdapterProxyFactory
 
     /**
      * @param $name
+     *
      * @return Filesystem
      */
     public function create($name)
@@ -29,17 +29,18 @@ class AdapterProxyFactory
                 $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, $this->getParameter('sftp', 'folder'), true);
                 break;
             case 'sftp':
-                $configuration  = new Ssh\Configuration($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
+                $configuration = new Ssh\Configuration($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
                 $authentication = new Ssh\Authentication\Password($this->getParameter('sftp', 'login'), $this->getParameter('sftp', 'password')); // for other options, check php-ssh docs
 
-                $session   = new Ssh\Session($configuration, $authentication);
-                $adapter   = new Gaufrette\Adapter\Sftp($session->getSftp());
+                $session = new Ssh\Session($configuration, $authentication);
+                $adapter = new Gaufrette\Adapter\Sftp($session->getSftp());
 
                 break;
             case 's3':
                 $service = new \Aws\S3\S3Client(array(
-                    'credentials' => ['key' => $this->getParameter('s3', 'key'),
-                    'secret' => $this->getParameter('s3', 'secret'),
+                    'credentials' => [
+                        'key' => $this->getParameter('s3', 'key'),
+                        'secret' => $this->getParameter('s3', 'secret'),
                     ],
                     'endpoint' => $this->getParameter('s3', 'endpoint'),
                     'bucket_endpoint' => $this->getParameter('s3', 'bucket_endpoint'),

@@ -14,13 +14,13 @@ Feature:
       Hello world
       """
     When I delete file "test.txt"
-    Then I should not see "test.txt" in list
+    Then I should not see "test.txt"
 
     Examples:
       | storage | adapter        |
       | local   | local          |
       | sftp    | sftp_phpseclib |
-#      | sftp    | sftp           |
+      | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
       | gridfs  | gridfs         |
@@ -43,7 +43,7 @@ Feature:
       | storage | adapter        |
       | local   | local          |
       | sftp    | sftp_phpseclib |
-#      | sftp    | sftp           |
+      | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
       | gridfs  | gridfs         |

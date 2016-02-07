@@ -12,7 +12,7 @@ A small set of Gaufrette tests interacting as close to reality as possible.
 
 ```bash
 git clone git@github.com:akovalyov/gaufrette-integration-tests.git
-composer install
+composer install --prefer-source #important, because we work with dynamically applied patches
 ./bin/test
 
 

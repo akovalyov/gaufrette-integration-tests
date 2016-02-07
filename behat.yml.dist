@@ -6,6 +6,9 @@ default:
             contexts:
                 - FeatureContext:
                     parameters:
+                        local:
+                            folder: volumes/local
+                            create: true
                         ftp:
                             host: localhost
                             username: gaufrette
@@ -13,12 +16,23 @@ default:
                             port: 21
                             passive: true
                         s3:
-                            key: your_key_here
-                            secret: your_secret
+                            key: asd
+                            secret: asd
+                            bucket_endpoint: true
                             endpoint: http://localhost:4569
                             region: us-west-2
-                            version: '2006-03-01'
-                            bucket: 'bucket'
+                            version: 'latest'
+                            bucket: 'gaufrette'
+                        sftp:
+                            login: gaufrette
+                            password: gaufrette
+                            port: 2222
+                            host: localhost
+                            folder: share
+                        gridfs:
+                            host: localhost
+                            port: 27016
+                            db: gaufrette
         appveyor:
             contexts:
                 - FeatureContext:
