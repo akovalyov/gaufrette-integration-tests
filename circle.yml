@@ -6,6 +6,7 @@ machine:
 
 dependencies:
   override:
+    - printf "\n" | pecl install ssh2-beta
     - printf "\n" | pecl install mongo
     - printf "\n" | pecl install runkit
     - composer install --prefer-source --ignore-platform-reqs
