@@ -10,9 +10,8 @@ Feature: As a Gaufrette user
       And file "3.txt" exists
       And file "4.txt" exists
       And file "5.txt" exists
-      When I call method "listDirectory" of current fs adapter
-      Then I should see "1.txt" in keys
-      And I should see "2.txt" in keys
-      And I should see "3.txt" in keys
-      And I should see "4.txt" in keys
-      And I should see "5.txt" in keys
+      Then I should see "1.txt" in "/"
+      And I should see "2.txt" in "/"
+      And I should see "3.txt" in "/"
+      And I should see "4.txt" in "/"
+      And I should see "5.txt" in "/"

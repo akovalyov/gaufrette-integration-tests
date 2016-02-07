@@ -1,7 +1,7 @@
 sftp:
     image: atmoz/sftp
     volumes:
-        - ./tmp:/home/gaufrette/share
+        - ./volumes/sftp/:/home/gaufrette/share
     command: gaufrette:gaufrette:1001
     ports:
         - "2222:22"
@@ -17,7 +17,7 @@ ftp:
       - "20-21:20-21"
       - "12020-12025:12020-12025"
     volumes:
-      - "./tmp/:/var/ftp/gaufrette"
+      - "./volumes/ftp/:/var/ftp/gaufrette/"
     environment:
       - FTP_VIRT_USER=gaufrette
       - FTP_VIRT_PASS=gaufrette

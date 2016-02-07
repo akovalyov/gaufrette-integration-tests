@@ -106,6 +106,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $method = new \ReflectionMethod($this->filesystem->getAdapter(), $method);
         $this->methodOutput = $method->invoke($this->filesystem->getAdapter());
     }
+
     /**
      * @Then I should see :fileKey in :key
      */

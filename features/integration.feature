@@ -19,7 +19,7 @@ Feature:
     Examples:
       | storage | adapter        |
       | local   | local          |
-#      | sftp    | sftp_phpseclib |
+      | sftp    | sftp_phpseclib |
 #      | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
@@ -42,8 +42,8 @@ Feature:
     Examples:
       | storage | adapter        |
       | local   | local          |
-#      | sftp    | sftp_phpseclib |
+      | sftp    | sftp_phpseclib |
 #      | sftp    | sftp           |
-#      | s3      | s3             |
-#      | ftp     | ftp            |
+      | s3      | s3             |
+      | ftp     | ftp            |
       | gridfs  | gridfs         |

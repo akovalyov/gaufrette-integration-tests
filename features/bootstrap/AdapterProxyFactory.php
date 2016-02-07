@@ -20,13 +20,13 @@ class AdapterProxyFactory
     {
         switch ($name) {
             case 'local':
-                $adapter = new LocalAdapter('./tmp');
+                $adapter = new LocalAdapter($this->getParameter('local', 'folder'), $this->getParameter('local', 'create'));
                 break;
             case 'sftp_phpseclib':
                 $sftp = new \phpseclib\Net\SFTP($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
-                $sftp->login($this->getParameter('sftp', 'login'), 'password');
+                $sftp->login($this->getParameter('sftp', 'login'), $this->getParameter('sftp', 'password'));
 
-                $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, 'share', true);
+                $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, $this->getParameter('sftp', 'folder'), true);
                 break;
             case 'sftp':
                 $configuration  = new Ssh\Configuration($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
