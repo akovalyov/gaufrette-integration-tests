@@ -158,7 +158,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         if(!extension_loaded('runkit')){
             throw new \RuntimeException('You should install `runkit` extension to be able to use hot-swap feature');
         }
-        
+
         runkit_import('vendor/autoload.php', RUNKIT_IMPORT_OVERRIDE);
     }
 }

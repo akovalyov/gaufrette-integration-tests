@@ -1,3 +1,4 @@
+@real
 Feature:
     As a Gaufrette user
     I should be able to rename files on AWS S3
