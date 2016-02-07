@@ -7,7 +7,7 @@ sftp:
         - "2222:22"
 
 s3:
-    build: images/s3
+    image: lphoward/fake-s3
     ports:
        - "4569:4569"
 
