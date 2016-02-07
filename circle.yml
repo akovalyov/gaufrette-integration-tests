@@ -6,7 +6,8 @@ machine:
 
 dependencies:
   override:
-    - printf "\n" | pecl install ssh2-beta
+    - sudo apt-get update; sudo apt-get install libssh2-1 libssh2-php
+#    - printf "\n" | pecl install ssh2-beta
     - printf "\n" | pecl install mongo
     - printf "\n" | pecl install runkit
     - composer install --prefer-source --ignore-platform-reqs
