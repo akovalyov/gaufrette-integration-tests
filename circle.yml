@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - pecl install mongo
+    - printf "\n" | pecl install mongo
     - composer install --prefer-source --ignore-platform-reqs
     - docker-compose up -d
 
