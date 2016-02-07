@@ -19,7 +19,7 @@ Feature:
     Examples:
       | storage | adapter        |
       | local   | local          |
-      | sftp    | sftp_phpseclib |
+#      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
       | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
@@ -42,7 +42,7 @@ Feature:
     Examples:
       | storage | adapter        |
       | local   | local          |
-      | sftp    | sftp_phpseclib |
+#      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
       | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
