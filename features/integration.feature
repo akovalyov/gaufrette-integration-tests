@@ -20,7 +20,7 @@ Feature:
       | storage | adapter        |
       | local   | local          |
 #      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
-      | sftp    | sftp           |
+#      | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
       | gridfs  | gridfs         |
@@ -43,7 +43,7 @@ Feature:
       | storage | adapter        |
       | local   | local          |
 #      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
-      | sftp    | sftp           |
+#      | sftp    | sftp           |
       | s3      | s3             |
       | ftp     | ftp            |
       | gridfs  | gridfs         |
