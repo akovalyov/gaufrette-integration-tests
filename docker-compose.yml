@@ -5,12 +5,14 @@ sftp:
     command: gaufrette:gaufrette:1001
     ports:
         - "2222:22"
-
+    volumes_from:
+        - data
 s3:
     image: lphoward/fake-s3
     ports:
        - "4569:4569"
-
+    volumes_from:
+        - data
 ftp:
     image: helder/vsftpd
     ports:
@@ -21,8 +23,15 @@ ftp:
     environment:
       - FTP_VIRT_USER=gaufrette
       - FTP_VIRT_PASS=gaufrette
-
+    volumes_from:
+        - data
 mongo:
     image: mongo
     ports:
       - 27016:27017
+    volumes_from:
+        - data
+data:
+    image: tianon/true
+    volumes:
+        - ./volumes/:/data/
