@@ -32,6 +32,7 @@ mongo:
     volumes_from:
         - data
 data:
-    image: tianon/true
+    image: busybox
     volumes:
         - ./volumes/:/data/
+    command: ["chmod", "-R", "777", "/data"]

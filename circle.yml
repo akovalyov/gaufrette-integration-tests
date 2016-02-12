@@ -8,7 +8,7 @@ dependencies:
   cache_directories:
     - '~/docker'
     - '~/.composer'
-    
+
   override:
     - sudo apt-get update; sudo apt-get install libssh2-1
     - printf "\n" | pecl install ssh2-beta
@@ -16,6 +16,7 @@ dependencies:
     - printf "\n" | pecl install runkit
     - composer install --prefer-source --ignore-platform-reqs
     - docker-compose up -d
+    - sudo chmod -R 777 volumes/*
 
 test:
   override:
