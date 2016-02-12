@@ -5,6 +5,10 @@ machine:
     version: 5.5.11
 
 dependencies:
+  cache_directories:
+    - '~/docker'
+    - '~/.composer'
+    
   override:
     - sudo apt-get update; sudo apt-get install libssh2-1
     - printf "\n" | pecl install ssh2-beta
