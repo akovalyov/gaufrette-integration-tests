@@ -155,10 +155,28 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iUsePr($id)
     {
         exec(sprintf('cd vendor/knplabs/gaufrette && git stash && git pull origin master && curl -sS https://patch-diff.githubusercontent.com/raw/KnpLabs/Gaufrette/pull/%s.patch | git apply', $id));
-        if(!extension_loaded('runkit')){
-            throw new \RuntimeException('You should install `runkit` extension to be able to use hot-swap feature');
-        }
+        $this->checkRunkit();
 
         runkit_import('vendor/autoload.php', RUNKIT_IMPORT_OVERRIDE);
+    }
+
+    /**
+     * @Given class :fqcn has method :method with arguments :args and code
+     */
+    public function classHasMethodWithArgumentsAndCode($fqcn, $method, $args, PyStringNode $code)
+    {
+        $this->checkRunkit();
+        $class = new \ReflectionClass($fqcn);
+        if(!$class->hasMethod($method)){
+            throw new \RuntimeException(sprintf('Class %s does not have method %s', $fqcn, $method));
+        }
+        runkit_method_redefine($fqcn, $method, $args, $code->__toString(), RUNKIT_ACC_PUBLIC);
+    }
+
+    private function checkRunkit()
+    {
+        if (!extension_loaded('runkit')) {
+            throw new \RuntimeException('You should install `runkit` extension to be able to use hot-swap feature');
+        }
     }
 }
