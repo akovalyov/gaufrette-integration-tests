@@ -1,8 +1,7 @@
 <?php
 
 use Gaufrette\Filesystem;
-use Gaufrette\Adapter\Sftp;
-use Gaufrette\Adapter\Local as LocalAdapter;
+use Gaufrette\Adapter;
 
 class AdapterProxyFactory
 {
@@ -20,20 +19,20 @@ class AdapterProxyFactory
     {
         switch ($name) {
             case 'local':
-                $adapter = new LocalAdapter($this->getParameter('local', 'folder'), $this->getParameter('local', 'create'));
+                $adapter = new Adapter\Local($this->getParameter('local', 'folder'), $this->getParameter('local', 'create'));
                 break;
             case 'sftp_phpseclib':
                 $sftp = new \phpseclib\Net\SFTP($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
                 $sftp->login($this->getParameter('sftp', 'login'), $this->getParameter('sftp', 'password'));
 
-                $adapter = new \Gaufrette\Adapter\PhpseclibSftp($sftp, $this->getParameter('sftp', 'folder'), true);
+                $adapter = new Adapter\PhpseclibSftp($sftp, $this->getParameter('sftp', 'folder'), true);
                 break;
             case 'sftp':
                 $configuration = new Ssh\Configuration($this->getParameter('sftp', 'host'), $this->getParameter('sftp', 'port'));
                 $authentication = new Ssh\Authentication\Password($this->getParameter('sftp', 'login'), $this->getParameter('sftp', 'password')); // for other options, check php-ssh docs
 
                 $session = new Ssh\Session($configuration, $authentication);
-                $adapter = new Gaufrette\Adapter\Sftp($session->getSftp());
+                $adapter = new Adapter\Sftp($session->getSftp());
 
                 break;
             case 's3':
@@ -47,10 +46,10 @@ class AdapterProxyFactory
                     'region' => $this->getParameter('s3', 'region'),
                     'version' => $this->getParameter('s3', 'version'),
                 ));
-                $adapter = new \Gaufrette\Adapter\AwsS3($service, $this->getParameter('s3', 'bucket'));
+                $adapter = new Adapter\AwsS3($service, $this->getParameter('s3', 'bucket'));
                 break;
             case 'ftp':
-                $adapter = new \Gaufrette\Adapter\Ftp('/', $this->getParameter('ftp', 'host'), array(
+                $adapter = new Adapter\Ftp('/', $this->getParameter('ftp', 'host'), array(
                     'username' => $this->getParameter('ftp', 'username'),
                     'password' => $this->getParameter('ftp', 'password'),
                     'passive' => $this->getParameter('ftp', 'passive'),
@@ -62,7 +61,11 @@ class AdapterProxyFactory
                 $client = new MongoClient(sprintf('mongodb://%s:%s', $this->getParameter('gridfs', 'host'), $this->getParameter('gridfs', 'port')));
                 $db = $client->selectDB($this->getParameter('gridfs', 'db'));
 
-                $adapter = new \Gaufrette\Adapter\GridFS(new MongoGridFS($db));
+                $adapter = new Adapter\GridFS(new MongoGridFS($db));
+                break;
+
+            case 'mogilefs':
+                $adapter = new Adapter\MogileFS('http://localhost:7001', [sprintf('%s:%s', $this->getParameter('mogilefs', 'host'), $this->getParameter('mogilefs', 'port'))]);
                 break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));

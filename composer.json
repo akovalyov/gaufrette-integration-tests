@@ -3,7 +3,8 @@
     "behat/behat": "^3.0"
   },
   "require": {
-    "knplabs/gaufrette": "^0.2.0",
+    "ext-openssl": "*",
+    "knplabs/gaufrette": "dev-master",
     "aws/aws-sdk-php": "^3.13",
     "herzult/php-ssh": "^1.1",
     "phpseclib/phpseclib": "^2.0"

@@ -4,12 +4,12 @@ Feature:
 
   Scenario Outline: Read/Write/Delete files
     Given I use <storage> with adapter <adapter>
-      And I write "test.txt" with content:
+    And I write "test.txt" with content:
       """
       Hello world
       """
-     When I read file "test.txt"
-     Then I should see:
+    When I read file "test.txt"
+    Then I should see:
       """
       Hello world
       """
@@ -17,22 +17,22 @@ Feature:
     Then I should not see "test.txt"
 
     Examples:
-      | storage | adapter        |
-      | local   | local          |
-#      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
-#      | sftp    | sftp           |
-      | s3      | s3             |
-      | ftp     | ftp            |
-      | gridfs  | gridfs         |
+      | storage  | adapter        |
+      | local    | local          |
+      | sftp     | sftp_phpseclib |
+      | s3       | s3             |
+      | ftp      | ftp            |
+      | gridfs   | gridfs         |
+#      | mogilefs | mogilefs       |
 
   Scenario Outline: Read/Write/Delete files/folders
     Given I use <storage> with adapter <adapter>
-      And I write "folder/test.txt" with content:
+    And I write "folder/test.txt" with content:
       """
       Hello world
       """
-     When I read file "folder/test.txt"
-     Then I should see:
+    When I read file "folder/test.txt"
+    Then I should see:
       """
       Hello world
       """
@@ -40,10 +40,10 @@ Feature:
     Then I should not see "test.txt" in "folder"
 
     Examples:
-      | storage | adapter        |
-      | local   | local          |
-#      | sftp    | sftp_phpseclib | valid after https://github.com/KnpLabs/Gaufrette/pull/371 is merged
-#      | sftp    | sftp           |
-      | s3      | s3             |
-      | ftp     | ftp            |
-      | gridfs  | gridfs         |
+      | storage  | adapter        |
+      | local    | local          |
+      | sftp     | sftp_phpseclib |
+      | s3       | s3             |
+      | ftp      | ftp            |
+      | gridfs   | gridfs         |
+#      | mogilefs | mogilefs       |

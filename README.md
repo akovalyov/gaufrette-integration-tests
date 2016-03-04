@@ -1,6 +1,7 @@
 # Gaufrette integration tests
 A small set of Gaufrette tests interacting as close to reality as possible.
 
+[![CircleCI](https://img.shields.io/circleci/project/akovalyov/gaufrette-integration-tests.svg)]()
 
 ### Prerequsites:
 

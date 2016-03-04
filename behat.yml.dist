@@ -33,6 +33,9 @@ default:
                             host: localhost
                             port: 27016
                             db: gaufrette
+                        mogilefs:
+                            host: localhost
+                            port: 7001
         appveyor:
             contexts:
                 - FeatureContext:
