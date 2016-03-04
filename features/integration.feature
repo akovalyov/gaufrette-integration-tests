@@ -18,11 +18,12 @@ Feature:
 
     Examples:
       | storage  | adapter        |
-      | local    | local          |
-      | sftp     | sftp_phpseclib |
-      | s3       | s3             |
-      | ftp      | ftp            |
-      | gridfs   | gridfs         |
+      | dropbox  | dropbox        |
+    #   | local    | local          |
+    #   | sftp     | sftp_phpseclib |
+    #   | s3       | s3             |
+    #   | ftp      | ftp            |
+    #   | gridfs   | gridfs         |
 #      | mogilefs | mogilefs       |
 
   Scenario Outline: Read/Write/Delete files/folders
@@ -41,9 +42,10 @@ Feature:
 
     Examples:
       | storage  | adapter        |
-      | local    | local          |
-      | sftp     | sftp_phpseclib |
-      | s3       | s3             |
-      | ftp      | ftp            |
-      | gridfs   | gridfs         |
+      | dropbox  | dropbox        |
+    #   | local    | local          |
+    #   | sftp     | sftp_phpseclib |
+    #   | s3       | s3             |
+    #   | ftp      | ftp            |
+    #   | gridfs   | gridfs         |
 #      | mogilefs | mogilefs       |

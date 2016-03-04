@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49fc41b12d16b8f9d7651f3f1411ea6e",
-    "content-hash": "44f346f67430c58d3aa302fa6f9d28a7",
+    "hash": "22949ba5e91f906a3f0aafbe7ccdc2a8",
+    "content-hash": "008ca8bcc67a6547e192755fc6aa6a67",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -85,6 +85,65 @@
                 "sdk"
             ],
             "time": "2016-01-28 21:33:18"
+        },
+        {
+            "name": "dropbox-php/dropbox-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dropbox-PHP/dropbox-php.git",
+                "reference": "de6495d56d91e96f4ff9ff61302f3cca3cefa7b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dropbox-PHP/dropbox-php/zipball/de6495d56d91e96f4ff9ff61302f3cca3cefa7b6",
+                "reference": "de6495d56d91e96f4ff9ff61302f3cca3cefa7b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Dropbox": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Constant",
+                    "email": "lazyguru@jofee.com",
+                    "homepage": "http://www.joeconstant.me/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Evan Kaufman",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Naoki Sawada",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Evert Pot",
+                    "email": "me@evertpot.com",
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dropbox PHP library",
+            "homepage": "http://dropbox-php.com/",
+            "keywords": [
+                "dropbox"
+            ],
+            "time": "2015-06-11 03:09:55"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1338,7 +1397,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "knplabs/gaufrette": 20
+        "knplabs/gaufrette": 20,
+        "dropbox-php/dropbox-php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

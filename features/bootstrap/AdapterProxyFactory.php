@@ -67,6 +67,18 @@ class AdapterProxyFactory
             case 'mogilefs':
                 $adapter = new Adapter\MogileFS('http://localhost:7001', [sprintf('%s:%s', $this->getParameter('mogilefs', 'host'), $this->getParameter('mogilefs', 'port'))]);
                 break;
+
+            case 'dropbox':
+                $dropboxOauth = new \Dropbox_OAuth_PHP(
+                    $this->getParameter('dropbox', 'consumerKey'),
+                    $this->getParameter('dropbox', 'consumerSecret')
+                );
+                $dropboxOauth->setToken($this->getParameter('dropbox', 'token'));
+
+                $adapter = new Adapter\Dropbox(
+                    new \Dropbox_API($dropboxOauth)
+                );
+                break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));
         }
