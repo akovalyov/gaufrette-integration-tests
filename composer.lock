@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49fc41b12d16b8f9d7651f3f1411ea6e",
-    "content-hash": "44f346f67430c58d3aa302fa6f9d28a7",
+    "hash": "7a904aa769d46c81904069449ef82dbd",
+    "content-hash": "8e807aa03f627a176963a9cac8a4b202",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -313,20 +313,20 @@
         },
         {
             "name": "knplabs/gaufrette",
-            "version": "dev-master",
+            "version": "dev-feature/flysystem-adapter",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/Gaufrette.git",
-                "reference": "3e0edaeafd60769f8b6ef7c625f4d69d3cab26da"
+                "reference": "42e58b9f9bd384691a78ea8f450737031f07260b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/3e0edaeafd60769f8b6ef7c625f4d69d3cab26da",
-                "reference": "3e0edaeafd60769f8b6ef7c625f4d69d3cab26da",
+                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/42e58b9f9bd384691a78ea8f450737031f07260b",
+                "reference": "42e58b9f9bd384691a78ea8f450737031f07260b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=5.4"
             },
             "require-dev": {
                 "amazonwebservices/aws-sdk-for-php": "1.5.*",
@@ -335,6 +335,7 @@
                 "dropbox-php/dropbox-php": "*",
                 "google/apiclient": "~1.1.3",
                 "herzult/php-ssh": "*",
+                "league/flysystem": "~1.0",
                 "microsoft/windowsazure": "dev-master",
                 "mikey179/vfsstream": "~1.2.0",
                 "phpseclib/phpseclib": "^2.0",
@@ -356,6 +357,7 @@
                 "google/apiclient": "to use GoogleCloudStorage adapter",
                 "herzult/php-ssh": "to use SFtp adapter",
                 "knplabs/knp-gaufrette-bundle": "to use with Symfony2",
+                "league/flysystem": "to use Flysystem adapters",
                 "microsoft/windowsazure": "to use Microsoft Azure Blob Storage adapter",
                 "phpseclib/phpseclib": "to use PhpseclibSftp adapter",
                 "rackspace/php-opencloud": "to use Opencloud adapter"
@@ -393,7 +395,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2016-03-03 15:12:59"
+            "time": "2016-03-04 16:22:03"
         },
         {
             "name": "mtdowling/jmespath.php",
