@@ -13,5 +13,8 @@
     "psr-4": {
       "Aws\\": "src/Aws"
     }
+  },
+  "config": {
+    "bin-dir": "bin"
   }
 }
