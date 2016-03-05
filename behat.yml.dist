@@ -36,6 +36,9 @@ default:
                         mogilefs:
                             host: localhost
                             port: 7001
+                        dropbox:
+                            consumerSecret: ~
+                            token: ~
         appveyor:
             contexts:
                 - FeatureContext:

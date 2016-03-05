@@ -17,13 +17,14 @@ Feature:
     Then I should not see "test.txt"
 
     Examples:
-      | storage  | adapter        |
-      | local    | local          |
-      | sftp     | sftp_phpseclib |
-      | s3       | s3             |
-      | ftp      | ftp            |
-      | gridfs   | gridfs         |
-#      | mogilefs | mogilefs       |
+      | storage   | adapter        |
+      | local     | local          |
+      | flysistem | flysistem      |
+      | sftp      | sftp_phpseclib |
+      | s3        | s3             |
+      | ftp       | ftp            |
+      | gridfs    | gridfs         |
+      | mogilefs  | mogilefs       |
 
   Scenario Outline: Read/Write/Delete files/folders
     Given I use <storage> with adapter <adapter>
@@ -40,10 +41,11 @@ Feature:
     Then I should not see "test.txt" in "folder"
 
     Examples:
-      | storage  | adapter        |
-      | local    | local          |
-      | sftp     | sftp_phpseclib |
-      | s3       | s3             |
-      | ftp      | ftp            |
-      | gridfs   | gridfs         |
-#      | mogilefs | mogilefs       |
+      | storage   | adapter        |
+      | local     | local          |
+      | flysistem | flysistem      |
+      | sftp      | sftp_phpseclib |
+      | s3        | s3             |
+      | ftp       | ftp            |
+      | gridfs    | gridfs         |
+      | mogilefs  | mogilefs       |
