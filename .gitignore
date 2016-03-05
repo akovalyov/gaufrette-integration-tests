@@ -2,3 +2,4 @@
 /tmp/*
 !/tmp/.gitkeep
 /behat.yml
+/bin/behat
