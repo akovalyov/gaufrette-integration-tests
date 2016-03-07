@@ -45,29 +45,8 @@ mysql:
       - MYSQL_DATABASE=gaufrette
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
-mogilefs_tracker:
-  image: rail44/mogile-tracker
-  ports:
-    - "7001:7001"
-  links:
-    - mogilefs_db
-    - mogilefs_node
-  environment:
-    - DB_1_PORT_3306_TCP_ADDR=mogilefs_db:3306
-    - NODE_1_PORT_7500_TCP_ADDR=mogilefs_node
-
-mogilefs_node:
-  image: rail44/mogile-node
-  ports:
-    - "7500:7500"
-
-mogilefs_db:
-  image: orchardup/mysql
-#  environment:
-#    - MYSQL_ROOT_PASSWORD=''
-
-#data:
-#    build: images/mogilefs
-#    volumes:
-#        - ./volumes/:/data/
-#    command: ["chmod", "-R", "777", "/data"]
+data:
+    image: busybox
+    volumes:
+        - ./volumes/:/data/
+    command: ["chmod", "-R", "777", "/data"]
