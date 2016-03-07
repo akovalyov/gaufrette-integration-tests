@@ -66,8 +66,8 @@ mogilefs_db:
 #  environment:
 #    - MYSQL_ROOT_PASSWORD=''
 
-data:
-    build: images/mogilefs
-    volumes:
-        - ./volumes/:/data/
-    command: ["chmod", "-R", "777", "/data"]
+#data:
+#    build: images/mogilefs
+#    volumes:
+#        - ./volumes/:/data/
+#    command: ["chmod", "-R", "777", "/data"]
