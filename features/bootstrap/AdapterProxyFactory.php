@@ -87,6 +87,18 @@ class AdapterProxyFactory
                 }
                 $adapter = new Adapter\DoctrineDbal($connection, $table->getName());
                 break;
+
+            case 'dropbox':
+                $dropboxOauth = new \Dropbox_OAuth_PHP(
+                    $this->getParameter('dropbox', 'consumerKey'),
+                    $this->getParameter('dropbox', 'consumerSecret')
+                );
+                $dropboxOauth->setToken($this->getParameter('dropbox', 'token'));
+
+                $adapter = new Adapter\Dropbox(
+                    new \Dropbox_API($dropboxOauth)
+                );
+                break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));
         }

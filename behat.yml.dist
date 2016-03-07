@@ -41,6 +41,10 @@ default:
                             user: gaufrette
                             password: gaufrette
                             db: gaufrette
+                        dropbox:
+                            consumerKey: ~
+                            consumerSecret: ~
+                            token: ~
         appveyor:
             contexts:
                 - FeatureContext:
