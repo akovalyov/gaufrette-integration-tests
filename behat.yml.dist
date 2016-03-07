@@ -10,7 +10,7 @@ default:
                             folder: volumes/local
                             create: true
                         ftp:
-                            host: localhost
+                            host: 127.0.0.1
                             username: gaufrette
                             password: gaufrette
                             port: 21
@@ -19,7 +19,7 @@ default:
                             key: asd
                             secret: asd
                             bucket_endpoint: true
-                            endpoint: http://localhost:4569
+                            endpoint: http://127.0.0.1:4569
                             region: us-west-2
                             version: 'latest'
                             bucket: 'gaufrette'
@@ -27,21 +27,26 @@ default:
                             login: gaufrette
                             password: gaufrette
                             port: 2222
-                            host: localhost
+                            host: 127.0.0.1
                             folder: share
                         gridfs:
-                            host: localhost
+                            host: 127.0.0.1
                             port: 27016
                             db: gaufrette
                         mogilefs:
-                            host: localhost
+                            host: 127.0.0.1
                             port: 7001
+                        mysql:
+                            host: 127.0.0.1
+                            user: gaufrette
+                            password: gaufrette
+                            db: gaufrette
         appveyor:
             contexts:
                 - FeatureContext:
                     parameters:
                         ftp:
-                            host: localhost
+                            host: 127.0.0.1
                             username: filezilla
                             password: filezilla
                             port: 14147

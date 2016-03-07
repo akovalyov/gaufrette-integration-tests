@@ -67,6 +67,26 @@ class AdapterProxyFactory
             case 'mogilefs':
                 $adapter = new Adapter\MogileFS('http://localhost:7001', [sprintf('%s:%s', $this->getParameter('mogilefs', 'host'), $this->getParameter('mogilefs', 'port'))]);
                 break;
+
+            case 'doctrine':
+                $connection = \Doctrine\DBAL\DriverManager::getConnection(
+                    [
+                        'url' => sprintf('mysql://%s:%s@%s/%s', $this->getParameter('mysql', 'user'), $this->getParameter('mysql', 'password'), $this->getParameter('mysql', 'host'), $this->getParameter('mysql', 'db')),
+                    ]
+                );
+                $sm = $connection->getSchemaManager();
+                $table = new \Doctrine\DBAL\Schema\Table('files');
+
+                if(!$sm->tablesExist(['files'])){
+                    $table = new \Doctrine\DBAL\Schema\Table('files');
+                    $table->addColumn('key', 'string');
+                    $table->addColumn('content', 'text');
+                    $table->addColumn('mtime', 'string');
+                    $table->addColumn('checksum', 'string');
+                    $sm->createTable($table);
+                }
+                $adapter = new Adapter\DoctrineDbal($connection, $table->getName());
+                break;
             default:
                 throw new \RuntimeException(sprintf('Unknown adapter %s', $name));
         }

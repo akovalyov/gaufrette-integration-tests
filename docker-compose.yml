@@ -35,6 +35,16 @@ mongo:
     volumes_from:
       - data
 
+mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=gaufrette
+      - MYSQL_PASSWORD=gaufrette
+      - MYSQL_DATABASE=gaufrette
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
 mogilefs_tracker:
   image: rail44/mogile-tracker
   ports:
@@ -48,11 +58,14 @@ mogilefs_tracker:
 
 mogilefs_node:
   image: rail44/mogile-node
+  ports:
+    - "7500:7500"
 
 mogilefs_db:
   image: orchardup/mysql
 #  environment:
 #    - MYSQL_ROOT_PASSWORD=''
+
 data:
     build: images/mogilefs
     volumes:
