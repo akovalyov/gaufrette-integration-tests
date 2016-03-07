@@ -25,6 +25,7 @@ Feature:
     #   | ftp      | ftp            |
     #   | gridfs   | gridfs         |
 #      | mogilefs | mogilefs       |
+      | doctrine | doctrine       |
 
   Scenario Outline: Read/Write/Delete files/folders
     Given I use <storage> with adapter <adapter>
@@ -49,3 +50,4 @@ Feature:
     #   | ftp      | ftp            |
     #   | gridfs   | gridfs         |
 #      | mogilefs | mogilefs       |
+      | doctrine | doctrine       |
